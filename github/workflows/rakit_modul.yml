@@ -1,0 +1,24 @@
+name: Rakit Zygisk FF3
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup NDK
+        uses: n0rt3n/setup-ndk@v1
+        with:
+          ndk-version: r25c
+
+      - name: Build Module
+        run: |
+          cd module/jni
+          ndk-build
+
+      - name: Upload Hasil .so
+        uses: actions/upload-artifact@v3
+        with:
+          name: Hasil-Build-FF3
+          path: module/libs/
